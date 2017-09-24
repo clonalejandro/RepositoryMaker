@@ -1,7 +1,6 @@
-# -*- coding=utf-8 -*-
+# -*- coding=utf-8 -*-
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-import urllib.request
 
 # /**
 # * Created by alejandrorioscalera
@@ -16,7 +15,7 @@ import urllib.request
 # *
 # * -- LICENSE --
 # *
-# * All rights reserved for clonalejandro ©RepositoryMaker 2017 / 2018
+# * All rights reserved for clonalejandro ©Repository 2017 / 2018
 # */
 
 
@@ -129,9 +128,7 @@ class UI_Main(object):
         self.toolButton.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.toolButton.setAutoFillBackground(False)
         icon = QtGui.QIcon()
-        img = urllib.request.urlopen("https://i.imgur.com/dP8aBJb.png").read()
-        ic = QtGui.QImage(); ic.loadFromData(img)
-        icon.addPixmap(QtGui.QPixmap(ic), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("./assets/img/file.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.toolButton.setIcon(icon)
         self.toolButton.setIconSize(QtCore.QSize(64, 64))
         self.toolButton.setAutoRaise(True)
