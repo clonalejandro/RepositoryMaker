@@ -1,6 +1,8 @@
 # -*- coding=utf-8 -*-
 
+import os, sys
 from subprocess import call
+import json
 
 # /**
 # * Created by alejandrorioscalera
@@ -15,7 +17,7 @@ from subprocess import call
 # *
 # * -- LICENSE --
 # *
-# * All rights reserved for clonalejandro ©Repository 2017 / 2018
+# * All rights reserved for clonalejandro ©RepositoryMaker 2017 / 2018
 # */
 
 
@@ -23,29 +25,29 @@ class Process(object):
 
     # SMALL CONSTRUCTORS
 
-    __i = 0; __mvn = 'mvn'; __slash = 6
+    __mvn = 'mvn'; __slash = 6
     __plugin = 'org.apache.maven.plugins:maven-install-plugin:2.5.2:install-file'
-    __args = ["-Dfile=", "-DgroupId=", "-DartifactId=", "-Dversion=", "-Dpackagin=", "-DlocalRepositoryPath=", " /"]
+    __args = ["-Dfile=", "-DgroupId=", "-DartifactId=", "-Dversion=", "-Dpackaging=", "-DlocalRepositoryPath=", " \\"]
 
     # REST
+    def config(self):
+        jsonFile = open("config.json", "r")
+        jsonCode = jsonFile.read()
+        jsonFile.close()
+        return json.loads(jsonCode)
 
     def makeRepo(self, jar, group, artifact, version):
         # Make vars
-        repo = "/Users/alejandrorioscalera/" + jar.replace(".jar", "")
-        i = self.__setIterator(); mvn = self.__mvn; plugin = self.__plugin; args = self.__args; slash = self.__slash
-        jar += slash; group += slash; artifact += slash; version += slash; repo += slash
+        repo = jar; mvn = self.__mvn; plugin = self.__plugin; args = self.__args; lFile = os.path.basename(repo).replace(".jar", "")
+        raid = self.config()['raid'] + self.config()['dirOfrepos']; _repo = raid + lFile;
+        _jar = args[0] + self.config()['raid'] + jar; _group = args[1] + group; _artifact = args[2] + artifact
+        _version = args[3] + version; _packaging = args[4] + "jar"
 
-        call([mvn, plugin, args[i] + jar,
-              args[i] + group, args[i] + artifact,
-              args[i] + version, args[i] + "jar",
-              args[i] + repo])
+        # Functions
+        os.chdir(raid)
 
-    # OTHERS
+        if not os.path.exists(_repo):
+            os.mkdir(_repo)
 
-    def getIterator(self):
-        return self.__i
-
-    def __setIterator(self):
-        n = self.__i
-        self.__i += 1
-        return n
+        call([mvn, plugin, _jar, _group, _artifact, _version, _packaging, args[5] + _repo])
+        sys.exit()
