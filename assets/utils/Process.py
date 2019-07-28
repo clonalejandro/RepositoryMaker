@@ -31,7 +31,7 @@ class Process(object):
 
     # REST
     def config(self):
-        jsonFile = open("config.json", "r")
+        jsonFile = open("config/config.json", "r")
         jsonCode = jsonFile.read()
         jsonFile.close()
         return json.loads(jsonCode)
